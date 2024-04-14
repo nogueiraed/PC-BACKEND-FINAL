@@ -1,10 +1,9 @@
-const DailyWorksheet = require("../model/entities/dailyWorksheet");
+const DailyWorksheet = require("../model/Entities/dailyWorksheet");
 const dailyWorksheet = new DailyWorksheet();
 
-class EntitiesController {
+class DwController {
   async getAllDailyWorksheets(req, res) {
     try {
-      console.log("Fetching all daily worksheets from the database");
       const result = await dailyWorksheet.getAllDws();
       console.log("Daily worksheets fetched successfully:", result);
       res.status(200).json(result);
@@ -17,7 +16,6 @@ class EntitiesController {
   async getDailyWorksheetById(req, res) {
     try {
       const id = req.params.id;
-      console.log("Fetching daily worksheet with ID:", id);
       const dailyWorksheetData = await dailyWorksheet.getDwById(id);
       if (!dailyWorksheetData) throw Error("No daily worksheet found");
       else {
@@ -32,7 +30,6 @@ class EntitiesController {
 
   async createDailyWorksheet(req, res) {
     try {
-      console.log("Received request to create a new daily worksheet:", req.body);
       const dailyWorksheetData = req.body;
       const result = await dailyWorksheet.createDw(dailyWorksheetData);
       console.log("Result of creating daily worksheet:", result);
@@ -56,7 +53,6 @@ class EntitiesController {
       console.log("Result of updating daily worksheet:", result);
   
       if (!result) {
-        console.log("Daily worksheet not found");
         res.status(404).json({ error: "Daily worksheet not found" });
       } else {
         console.log("Daily worksheet updated successfully");
@@ -87,4 +83,4 @@ class EntitiesController {
   }
 }
 
-module.exports = EntitiesController;
+module.exports = DwController;

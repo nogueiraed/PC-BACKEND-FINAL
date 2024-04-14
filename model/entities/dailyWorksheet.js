@@ -19,7 +19,7 @@ class DailyWorksheet {
   async getAllDws() {
     try {
       console.log("Fetching all daily worksheets from the database");
-      const dws = await database.ExecuteQuery("SELECT * FROM dailyworksheet");
+      const dws = await database.ExecuteQuery("SELECT * FROM dailyworksheet"); //dws = Daily WorksheetS
       console.log("Daily worksheets fetched successfully:", dws);
       return dws;
     } catch (error) {
@@ -33,7 +33,18 @@ class DailyWorksheet {
       console.log("Creating daily worksheet:", dailyWorksheetData);
 
       const query = `
-        INSERT INTO dailyworksheet (date, site, siteManager, jobNumber, poNumber, teamLeader, cleaners, contractType, workDescription, extraProduct)
+        INSERT INTO dailyworksheet (
+        date, 
+        site, 
+        siteManager, 
+        jobNumber, 
+        poNumber, 
+        teamLeader, 
+        cleaners, 
+        contractType, 
+        workDescription, 
+        extraProduct)
+        
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `;
       const values = [
@@ -59,8 +70,8 @@ class DailyWorksheet {
 
   async updateDw(id, updatedDw) {
     try {
-      console.log(`Atualizando Daily Worksheet com ID ${id}`);
-      console.log("Dados atualizados:", updatedDw);  
+      console.log(`Updating daily worksheet with ID ${id}`);
+      console.log("Updated:", updatedDw);  
       const query = `
         UPDATE dailyworksheet
         SET date = ?,
@@ -88,12 +99,11 @@ class DailyWorksheet {
         updatedDw.extraProduct,
         id
       ];
-      console.log("Executando consulta de atualização:", query);
       const affectedRows = await database.ExecuteNonQuery(query, values);
-      console.log(`Daily Worksheet com ID ${id} atualizado com sucesso. Linhas afetadas:`, affectedRows);
+      console.log(`Daily worksheet with ID ${id} updated. Affected rows:`, affectedRows);
       return affectedRows > 0;
     } catch (error) {
-      console.error("Erro ao atualizar Daily Worksheet:", error);
+      console.error("Error updating daily worksheet:", error);
       return false;
     }
   }

@@ -5,7 +5,8 @@ class Database {
       host: "aws-efy.clseyoauobbq.sa-east-1.rds.amazonaws.com",
       user: "admin",
       password: "Unoeste123",
-      database: "efy",
+      database: "precision_cleaning",
+      //email faculdade senha padrao
     });
   }
 
@@ -22,20 +23,14 @@ class Database {
   async ExecuteNonQuery(sql, params = []) {
     const connection = await this.pool.getConnection();
     try {
-        console.log("Conexão adquirida com sucesso");
         const [results] = await connection.query(sql, params);
-        console.log("Consulta SQL executada com sucesso:", sql, "Parametros:", params, "Resultados:", results);
         return results.affectedRows;
     } catch (error) {
-        console.error("Erro ao executar consulta SQL:", error);
         throw error; 
     } finally {
         connection.release();
-        console.log("Conexão liberada");
     }
-}
-
-
+  }
 }
 
 module.exports = Database;
